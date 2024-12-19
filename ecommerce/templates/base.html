@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="favicon.png" />
     <meta name="description" content="" />
     <meta name="keywords" content="bootstrap, bootstrap4" />
+    <meta name="csrf-token" content="{{ csrf_token }}" />
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
@@ -71,22 +72,15 @@
                 class="dropdown-menu dropdown-menu-end"
                 aria-labelledby="userDropdown"
               >
-              {% if not user.is_authenticated %}
+                {% if not user.is_authenticated %}
 
-              <li>
-                <a class="dropdown-item" href="{% url 'login' %}"
-                  >Login</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="{% url 'signup' %}"
-                  >Sign Up</a
-                >
-              </li>
-              {% endif %}
-
-              
-              {% if user.is_authenticated %}
+                <li>
+                  <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'signup' %}">Sign Up</a>
+                </li>
+                {% endif %} {% if user.is_authenticated %}
                 <li>
                   <a class="dropdown-item" href="{% url 'dashboard' %}"
                     >Profile</a
@@ -115,18 +109,11 @@
     </nav>
     <!-- End Header/Navigation -->
 
-    {% if messages %}
-    <div class="container">
-      {% for message in messages %}
-      <div
-        class="alert alert-{{ message.tags }} alert-danger mt-3"
-        role="alert"
-      >
-        {{ message }}
-      </div>
-      {% endfor %}
+    {% if messages %} {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-danger m-0" role="alert">
+      {{ message }}
     </div>
-    {% endif %}
+    {% endfor %} {% endif %}
 
     <!-- Main Content -->
     {% block content %}
@@ -271,6 +258,198 @@
       </div>
     </footer>
     <!-- End Footer Section -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const alertContainer = document.createElement("div");
+        alertContainer.className = "alert-container";
+        document.body.prepend(alertContainer);
+    
+        // Function to create and display alert messages
+        function showAlert(messageText, alertType = "danger") {
+          const messageContainer = document.createElement("div");
+          messageContainer.className = `alert alert-${alertType}`;
+          messageContainer.textContent = messageText;
+    
+          // Add margin-top to space out alerts
+          const existingAlerts = alertContainer.querySelectorAll(".alert");
+          if (existingAlerts.length > 0) {
+            messageContainer.style.marginTop = "20px";
+          }
+    
+          alertContainer.appendChild(messageContainer);
+          setTimeout(() => {
+            messageContainer.remove();
+          }, 5000);
+        }
+    
+        // Function to calculate and update the subtotal
+        function updateSubtotal() {
+          const cartItems = document.querySelectorAll('tr[id^="cart-item-"]');
+          let subtotal = 0;
+    
+          cartItems.forEach((item) => {
+            const price = parseFloat(
+              item.querySelector("[data-price]").dataset.price
+            );
+            const quantity = parseInt(
+              item.querySelector(".quantity-input").value
+            );
+            const total = price * quantity;
+            subtotal += total;
+          });
+    
+          document.getElementById(
+            "cart-subtotal"
+          ).textContent = `$${subtotal.toFixed(2)}`;
+        }
+    
+        // Add to cart
+        document.querySelectorAll(".add-to-cart").forEach((span) => {
+          span.addEventListener("click", function () {
+            const itemId = this.dataset.itemId;
+            fetch("{% url 'add_to_cart' %}", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}",
+              },
+              body: JSON.stringify({
+                item_id: itemId,
+              }),
+            })
+              .then((response) => {
+                if (response.status === 403) {
+                  showAlert('You need to login or signup to add items to the cart.', 'danger');
+                  return;
+                }
+                if (response.ok) {
+                  return response.json();
+                } else {
+                  console.error(
+                    "Failed to add item to cart. Status:",
+                    response.status
+                  );
+                  return response.json();
+                }
+              })
+              .then((data) => {
+                if (data && data.status === "success") {
+                  showAlert("Item added to cart successfully!", "success");
+                  updateSubtotal();
+                } else if (data) {
+                  console.error("Error:", data.message);
+                }
+              })
+              .catch((error) => console.error("Fetch error:", error));
+          });
+        });
+    
+        // Update cart
+        document.querySelectorAll(".minus, .plus").forEach((button) => {
+          button.addEventListener("click", function () {
+            const itemId = this.dataset.itemId;
+            const quantityInput = document.getElementById(`quantity-${itemId}`);
+            let newQuantity = parseInt(quantityInput.value);
+    
+            if (this.classList.contains("plus")) {
+              newQuantity++;
+            } else if (this.classList.contains("minus") && newQuantity > 1) {
+              newQuantity--;
+            }
+    
+            quantityInput.value = newQuantity;
+    
+            fetch("{% url 'update_cart' %}", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}",
+              },
+              body: JSON.stringify({
+                item_id: itemId,
+                quantity: newQuantity,
+              }),
+            })
+              .then((response) => {
+                if (response.status === 403) {
+                  showAlert('You need to login or signup to update the cart.', 'danger');
+                  return;
+                }
+                if (response.ok) {
+                  return response.json();
+                } else {
+                  console.error(
+                    "Failed to update cart. Status:",
+                    response.status
+                  );
+                  return response.json();
+                }
+              })
+              .then((data) => {
+                if (data && data.status === "success") {
+                  showAlert("Cart updated successfully!", "success");
+    
+                  // Update total price
+                  const totalElement = document.getElementById(
+                    `total-${itemId}`
+                  );
+                  const price = parseFloat(totalElement.dataset.price);
+                  totalElement.textContent = (price * newQuantity).toFixed(2);
+                  updateSubtotal();
+                } else if (data) {
+                  console.error("Error:", data.message);
+                }
+              })
+              .catch((error) => console.error("Fetch error:", error));
+          });
+        });
+    
+        // Remove from cart
+        document.querySelectorAll(".remove-item").forEach((button) => {
+          button.addEventListener("click", function (event) {
+            event.preventDefault();
+            const itemId = this.dataset.itemId;
+            fetch("{% url 'remove_from_cart' %}", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}",
+              },
+              body: JSON.stringify({
+                item_id: itemId,
+              }),
+            })
+              .then((response) => {
+                if (response.status === 403) {
+                  showAlert('You need to login or signup to remove items from the cart.', 'danger');
+                  return;
+                }
+                if (response.ok) {
+                  document.getElementById(`cart-item-${itemId}`).remove();
+                  showAlert("Item removed from cart successfully!", "success");
+                  updateSubtotal();
+                } else {
+                  console.error(
+                    "Failed to remove item from cart. Status:",
+                    response.status
+                  );
+                  return response.json();
+                }
+              })
+              .then((data) => {
+                if (data && data.status !== "success") {
+                  console.error("Error:", data.message);
+                }
+              })
+              .catch((error) => console.error("Fetch error:", error));
+          });
+        });
+    
+        // Initial subtotal calculation
+        updateSubtotal();
+      });
+    </script>
+    
 
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/tiny-slider.js' %}"></script>
