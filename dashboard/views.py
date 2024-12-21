@@ -19,3 +19,6 @@ def logout_view(request):
 def custom_dashboard_redirect(request):
     messages.error(request, "You need to log in to access the dashboard.")
     return redirect('login')  # Replace 'login' with your login page URL name
+
+def manage_users(request):
+    return render(request, "dashboard/manage.html")

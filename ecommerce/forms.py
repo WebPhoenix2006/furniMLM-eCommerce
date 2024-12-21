@@ -28,8 +28,7 @@ class CustomUserCreationForm(forms.ModelForm):
 
 class ProfileForm(forms.ModelForm):
     role = forms.ChoiceField(choices=ROLE_CHOICES)
-    referral = forms.CharField(max_length=50, required=False)
-
+    
     class Meta:
         model = Profile
-        fields = ["referral", "position", "role"]
+        fields = ["referral_code", "position", "role"]

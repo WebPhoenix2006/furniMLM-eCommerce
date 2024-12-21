@@ -45,7 +45,7 @@ class Product(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(unique=True)
-    referral = models.CharField(max_length=50, blank=True, null=True)
+    referral_code = models.CharField(max_length=50, blank=True, null=True)
     position = models.CharField(
         max_length=10, choices=[("Left", "Left"), ("Right", "Right")]
     )
