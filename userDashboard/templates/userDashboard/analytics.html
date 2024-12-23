@@ -1,0 +1,109 @@
+{% extends 'user-dashboard-base.html' %} 
+{% load static %}
+{% block title%}Login{% endblock %} 
+
+
+{% block content %}
+
+<main>
+    <h1 style="margin-bottom: 30px;">Sales & Performance</h1>
+
+    <h2>Insights</h2>
+    <div class="insights">
+        <div class="sales">
+          <span class="material-icons-sharp">analytics</span>
+          <div class="middle">
+            <div class="left">
+              <h3>Personal Sales</h3>
+              <h1>$25,024</h1>
+            </div>
+            <div class="progress">
+              <svg>
+                <circle cx="38" cy="38" r="36"></circle>
+              </svg>
+              <div class="number">
+                <p>81%</p>
+              </div>
+            </div>
+          </div>
+          <small class="text-muted">Last 24 Hours</small>
+        </div>
+        <!-- end of sales -->
+   
+        <div class="expenses">
+          <span class="material-icons-sharp">bar_chart</span>
+          <div class="middle">
+            <div class="left">
+              <h3>Team Sales</h3>
+              <h1>$124,160</h1>
+            </div>
+            <div class="progress">
+              <svg>
+                <circle cx="38" cy="38" r="36"></circle>
+              </svg>
+              <div class="number">
+                <p>62%</p>
+              </div>
+            </div>
+          </div>
+          <small class="text-muted">Last 24 Hours</small>
+        </div>
+        <!-- end of expenses -->
+   
+        <div class="income">
+          <span class="material-icons-sharp">stacked_line_chart</span>
+          <div class="middle">
+            <div class="left">
+              <h3>Total Income</h3>
+              <h1>$150,864</h1>
+            </div>
+            <div class="progress">
+              <svg>
+                <circle cx="38" cy="38" r="36"></circle>
+              </svg>
+              <div class="number">
+                <p>44%</p>
+              </div>
+            </div>
+          </div>
+          <small class="text-muted">Last 24 Hours</small>
+        </div>
+        <!-- end of income -->
+        <div class="expenses">
+            <span class="material-icons-sharp">bar_chart</span>
+            <div class="middle">
+              <div class="left">
+                <h3>Ranking</h3>
+                <h1>552</h1>
+              </div>
+              
+            </div>
+            <small class="text-muted">Last 24 Hours</small>
+          </div>
+          <!-- end of expenses -->
+      </div>
+</main>
+<div class="right">
+    <div class="top">
+      <button id="menu-btn">
+        <span class="material-icons-sharp">menu</span>
+      </button>
+      <div class="theme-toggler">
+        <span class="material-icons-sharp active">light_mode</span>
+        <span class="material-icons-sharp">dark_mode</span>
+      </div>
+      <div class="profile">
+        <div class="info">
+          <p>Hey <b>Daniel</b></p>
+          <small class="text-muted">Admin</small>
+        </div>
+        <div class="profile-photo">
+          <img src="{% static './images/profile-1.jpg' %}" />
+        </div>
+      </div>
+    </div>
+    <!-- END OF TOP -->
+   
+    
+  </div>
+{% endblock %}
