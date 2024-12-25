@@ -1,0 +1,11 @@
+.recent-orders-head {
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.recent-orders-head .generate-code-button{
+  display:flex;
+  align-items: center;
+  gap:10px;
+}

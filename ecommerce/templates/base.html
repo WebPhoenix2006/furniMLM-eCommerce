@@ -263,30 +263,30 @@
         const alertContainer = document.createElement("div");
         alertContainer.className = "alert-container";
         document.body.prepend(alertContainer);
-    
+
         // Function to create and display alert messages
         function showAlert(messageText, alertType = "danger") {
           const messageContainer = document.createElement("div");
           messageContainer.className = `alert alert-${alertType}`;
           messageContainer.textContent = messageText;
-    
+
           // Add margin-top to space out alerts
           const existingAlerts = alertContainer.querySelectorAll(".alert");
           if (existingAlerts.length > 0) {
             messageContainer.style.marginTop = "20px";
           }
-    
+
           alertContainer.appendChild(messageContainer);
           setTimeout(() => {
             messageContainer.remove();
           }, 5000);
         }
-    
+
         // Function to calculate and update the subtotal
         function updateSubtotal() {
           const cartItems = document.querySelectorAll('tr[id^="cart-item-"]');
           let subtotal = 0;
-    
+
           cartItems.forEach((item) => {
             const price = parseFloat(
               item.querySelector("[data-price]").dataset.price
@@ -297,12 +297,12 @@
             const total = price * quantity;
             subtotal += total;
           });
-    
+
           document.getElementById(
             "cart-subtotal"
           ).textContent = `$${subtotal.toFixed(2)}`;
         }
-    
+
         // Add to cart
         document.querySelectorAll(".add-to-cart").forEach((span) => {
           span.addEventListener("click", function () {
@@ -319,7 +319,10 @@
             })
               .then((response) => {
                 if (response.status === 403) {
-                  showAlert('You need to login or signup to add items to the cart.', 'danger');
+                  showAlert(
+                    "You need to login or signup to add items to the cart.",
+                    "danger"
+                  );
                   return;
                 }
                 if (response.ok) {
@@ -343,22 +346,22 @@
               .catch((error) => console.error("Fetch error:", error));
           });
         });
-    
+
         // Update cart
         document.querySelectorAll(".minus, .plus").forEach((button) => {
           button.addEventListener("click", function () {
             const itemId = this.dataset.itemId;
             const quantityInput = document.getElementById(`quantity-${itemId}`);
             let newQuantity = parseInt(quantityInput.value);
-    
+
             if (this.classList.contains("plus")) {
               newQuantity++;
             } else if (this.classList.contains("minus") && newQuantity > 1) {
               newQuantity--;
             }
-    
+
             quantityInput.value = newQuantity;
-    
+
             fetch("{% url 'update_cart' %}", {
               method: "POST",
               headers: {
@@ -372,7 +375,10 @@
             })
               .then((response) => {
                 if (response.status === 403) {
-                  showAlert('You need to login or signup to update the cart.', 'danger');
+                  showAlert(
+                    "You need to login or signup to update the cart.",
+                    "danger"
+                  );
                   return;
                 }
                 if (response.ok) {
@@ -388,7 +394,7 @@
               .then((data) => {
                 if (data && data.status === "success") {
                   showAlert("Cart updated successfully!", "success");
-    
+
                   // Update total price
                   const totalElement = document.getElementById(
                     `total-${itemId}`
@@ -403,7 +409,7 @@
               .catch((error) => console.error("Fetch error:", error));
           });
         });
-    
+
         // Remove from cart
         document.querySelectorAll(".remove-item").forEach((button) => {
           button.addEventListener("click", function (event) {
@@ -421,7 +427,10 @@
             })
               .then((response) => {
                 if (response.status === 403) {
-                  showAlert('You need to login or signup to remove items from the cart.', 'danger');
+                  showAlert(
+                    "You need to login or signup to remove items from the cart.",
+                    "danger"
+                  );
                   return;
                 }
                 if (response.ok) {
@@ -444,12 +453,11 @@
               .catch((error) => console.error("Fetch error:", error));
           });
         });
-    
+
         // Initial subtotal calculation
         updateSubtotal();
       });
     </script>
-    
 
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/tiny-slider.js' %}"></script>

@@ -5,88 +5,91 @@
 
 {% block content %}
 
-
-<main>
-    
-<div class="recent-orders">
-    <div style="display: flex; align-items: center; justify-content: space-between;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static '/css/manage.css' %}">
+  <title>Document</title>
+</head>
+<body>
+  <main>
+    <div class="recent-orders">
+      <div class="recent-orders-head">
         <h2>Manage Users</h2>
-        <div style="display: flex;">
-            <a href="#" class="button" style="margin-right: 10px;"><span><i class="fa fa-plus" style="margin-right: 10px;"></i></span>Add User</a>
-        <a href="#" class="button" style="margin-right: 10px;" data-toggle="modal" data-target="#myModal"><span><i class="fa fa-plus" style="margin-right: 10px;"></i></span>Generate Code</a>
-          <!-- Button to Open the Modal -->
-
+        <div class="generate-code-button">
+          <i class="fa fa-plus"></i>
+          <a href="#" >ADD USER</a>
         </div>
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>User ID</th>
-          <th>User Role</th>
-          <th>Email</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr>
-          <td>Foldable Mini Drone</td>
-          <td>85631</td>
-          <td>Due</td>
-          <td class="warning">Pending</td>
-          <td class="primary">
-            <span class="me-2" style="cursor: pointer; margin-right: 20px"><i class="fa fa-trash"></i></span>
-            <span class="me-2" style="cursor: pointer;"><i class="fa fa-pen"></i></span>
-          </td>
-        </tr>
-
-        
-      </tbody>
-    </table>
-    <a href="#">Show All</a>
-  
-  </div>
-
-  <div class="recent-orders">
-    <h3 style="margin-bottom: 20px;">Registration Codes</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Code</th>
-          <th>Role</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr>
-          <td>763576</td>
-          <td>Team Leader</td>
-          <td class="danger">Unavailable</td>
-          <td class="primary">
-            <span class="me-2" style="cursor: pointer; margin-right: 20px"><i class="fa fa-trash"></i></span>
-          </td>
-        </tr>
-        <tr>
-          <td>763576</td>
-          <td>Team Leader</td>
-          <td class="success">Available</td>
-          <td class="primary">
-            <span class="me-2" style="cursor: pointer; margin-right: 20px"><i class="fa fa-trash"></i></span>
-          </td>
-        </tr>
-
-        
-      </tbody>
-    </table>
+      </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>User ID</th>
+              <th>User Role</th>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+          </thead>
     
-  </div>
+          <tbody>
+            <tr>
+              <td>Foldable Mini Drone</td>
+              <td>85631</td>
+              <td>Due</td>
+              <td class="warning">Pending</td>
+              <td class="primary">
+                <span class="me-2" style="cursor: pointer; margin-right: 20px"><i class="fa fa-trash"></i></span>
+                <span class="me-2" style="cursor: pointer;"><i class="fa fa-pen"></i></span>
+              </td>
+            </tr>
+    
+            
+          </tbody>
+        </table>
+        <a href="#">Show All</a>
+      
+      </div>
+    
+      <div class="recent-orders">
+        <h3 style="margin-bottom: 20px;">Registration Codes</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+    
+          <tbody>
+            <tr>
+              <td>763576</td>
+              <td>Team Leader</td>
+              <td class="danger">Unavailable</td>
+              <td class="primary">
+                <span class="me-2" style="cursor: pointer; margin-right: 20px"><i class="fa fa-trash"></i></span>
+              </td>
+            </tr>
+            <tr>
+              <td>763576</td>
+              <td>Team Leader</td>
+              <td class="success">Available</td>
+              <td class="primary">
+                <span class="me-2" style="cursor: pointer; margin-right: 20px"><i class="fa fa-trash"></i></span>
+              </td>
+            </tr>            
+          </tbody>
+        </table>
+      </div>
+    </main>  
+</body>
+</html>
 
-  
 
-</main>
 
 
 {% endblock %} 
