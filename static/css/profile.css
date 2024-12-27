@@ -1,110 +1,104 @@
-body {
-  background: #f5f5f5;
-  margin-top: 20px;
-}
-
-.ui-w-80 {
-  width : 80px !important;
+main {
+  width:100%;
   height: auto;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.btn-default {
-  border-color: rgba(24, 28, 33, 0.1);
-  background  : rgba(0, 0, 0, 0);
-  color       : #4E5155;
+h2 {
+  color: #0030ff;
+  margin-bottom: 1rem;
 }
 
-label.btn {
-  margin-bottom: 0;
+.container {
+  display: flex;
+  gap: 2rem;
 }
 
-.btn-outline-primary {
-  border-color: #26B4FF;
-  background  : transparent;
-  color       : #26B4FF;
+.tab-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  border-right: 2px solid #909090;
+  padding-right: 1rem;
 }
 
-.btn {
+.tab-button {
+  border: 0;
+  background-color: transparent;
   cursor: pointer;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  font-size: 1rem;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.text-light {
-  color: #babbbc !important;
+.tab-button:hover,
+.tab-button.active {
+  background-color: #0030ff;
+  color: #fff;
 }
 
-.btn-facebook {
-  border-color: rgba(0, 0, 0, 0);
-  background  : #3B5998;
-  color       : #fff;
+.tab-content {
+  display: none;
+  flex-grow: 1;
 }
 
-.btn-instagram {
-  border-color: rgba(0, 0, 0, 0);
-  background  : #000;
-  color       : #fff;
+.tab-content.active {
+  display: block;
 }
 
-.card {
-  background-clip: padding-box;
-  box-shadow     : 0 1px 4px rgba(24, 28, 33, 0.012);
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.row-bordered {
-  overflow: hidden;
+.page > div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
 }
 
-.account-settings-fileinput {
-  position  : absolute;
-  visibility: hidden;
-  width     : 1px;
-  height    : 1px;
-  opacity   : 0;
+.page > div label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
 }
 
-.account-settings-links .list-group-item.active {
-  font-weight: bold !important;
+.page > div input,
+.page > div textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-html:not(.dark-style) .account-settings-links .list-group-item.active {
-  background: transparent !important;
+.page > div input:focus,
+.page > div textarea:focus {
+  border-color: #0030ff;
+  outline: none;
 }
 
-.account-settings-multiselect~.select2-container {
-  width: 100% !important;
+.page > div input[type="checkbox"] {
+  width: auto;
+  margin-right: 0.5rem;
 }
 
-.light-style .account-settings-links .list-group-item {
-  padding     : 0.85rem 1.5rem;
-  border-color: rgba(24, 28, 33, 0.03) !important;
+.page > div span {
+  margin-left: 0.5rem;
 }
 
-.light-style .account-settings-links .list-group-item.active {
-  color: #4e5155 !important;
+.page h3 {
+  margin-top: 1rem;
+  color: #0030ff;
 }
 
-.material-style .account-settings-links .list-group-item {
-  padding     : 0.85rem 1.5rem;
-  border-color: rgba(24, 28, 33, 0.03) !important;
-}
-
-.material-style .account-settings-links .list-group-item.active {
-  color: #4e5155 !important;
-}
-
-.dark-style .account-settings-links .list-group-item {
-  padding     : 0.85rem 1.5rem;
-  border-color: rgba(255, 255, 255, 0.03) !important;
-}
-
-.dark-style .account-settings-links .list-group-item.active {
-  color: #fff !important;
-}
-
-.light-style .account-settings-links .list-group-item.active {
-  color: #4E5155 !important;
-}
-
-.light-style .account-settings-links .list-group-item {
-  padding     : 0.85rem 1.5rem;
-  border-color: rgba(24, 28, 33, 0.03) !important;
+.page textarea {
+  resize: vertical;
+  height: 100px;
 }
